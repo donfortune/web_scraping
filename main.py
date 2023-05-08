@@ -1,3 +1,5 @@
+import time
+
 import requests  #get page source and save as string
 import selectorlib #extracts particular value btw h tags
 import smtplib, ssl
@@ -39,14 +41,17 @@ def send_email():
 
 
 if __name__ == "__main__":
-    scrapped = scrape(URL)
-    extracted = get_source(scrapped)
-    extracted_info = f"The loaction and date for the next tour is: {extracted}"
-    print(extracted_info)
+    while True:
+        scrapped = scrape(URL)
+        extracted = get_source(scrapped)
+        extracted_info = f"The loaction and date for the next tour is: {extracted}"
+        print(extracted_info)
 
-    if extracted != 'No upcoming tours':
-        if extracted not in 'tours.txt':
-            send_email()
+        if extracted != 'No upcoming tours':
+            if extracted not in 'tours.txt':
+                send_email()
+
+        time.sleep(2)
 
 
 
