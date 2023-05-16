@@ -5,6 +5,8 @@ import selectorlib #extracts particular value btw h tags
 import smtplib, ssl
 from email.message import EmailMessage
 
+"INSERT INTO events "
+
 URL = "http://programmer100.pythonanywhere.com/tours/"
 
 
