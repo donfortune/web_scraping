@@ -8,7 +8,6 @@ import sqlite3
 
 URL = "http://programmer100.pythonanywhere.com/tours/"
 
-connection = sqlite3.connect("data.db")
 
 
 class Tours:
@@ -43,22 +42,25 @@ class SendMail:
             file.sendmail(username, receiver_email, message.as_string())
             file.quit()
 
-def store_to_database(get_source):
-    row = get_source.split(',')
-    row = [item.strip() for item in row ]
-    cursor = connection.cursor()
-    cursor.execute("INSERT INTO events VALUES(?,?,?)", row)
-    connection.commit
+class Database:
+    def __init__(self):
+        self.connection = sqlite3.connect("data.db")
+    def store_to_database(self, get_source):
+        row = get_source.split(',')
+        row = [item.strip() for item in row ]
+        cursor = self.connection.cursor()
+        cursor.execute("INSERT INTO events VALUES(?,?,?)", row)
+        self.connection.commit
 
-def read_data_db(get_source):
-    row = get_source.split(',')
-    row = [item.strip() for item in row ]
-    band, city, date = row
-    cursor = connection.cursor()
-    cursor.execute("SELECT * FROM events WHERE band=? AND city=? AND date=?", (band, city, date))
-    rows = cursor.fetchall()
-    print(rows)
-    return rows
+    def read_data_db(self, get_source):
+        row = get_source.split(',')
+        row = [item.strip() for item in row ]
+        band, city, date = row
+        cursor = self.connection.cursor()
+        cursor.execute("SELECT * FROM events WHERE band=? AND city=? AND date=?", (band, city, date))
+        rows = cursor.fetchall()
+        print(rows)
+        return rows
 
 
 
