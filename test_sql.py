@@ -1,4 +1,4 @@
-import sqlite3
+import sqlite3 #the lib 
 #connect to sql db
 connection = sqlite3.connect("data.db")
 cursor = connection.cursor()
